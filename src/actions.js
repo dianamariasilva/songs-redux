@@ -1,66 +1,31 @@
 import store from "./store";
 
-export const incrementScore = (index) => {
-	let date = new Date();
-	let day = date.getDate();
-	let month = date.getMonth()+1;
-	let year = date.getFullYear();
-	const cloneList = [...store.getState().players];
-	cloneList[index].score++;
-	cloneList[index].updated = `${month}/${day}/${year}`;
-
-	store.setState({
-		players: cloneList
-	})
+export const play = (index) => {
+	var currentSong = this.songs[this.nowPlayingIndex];
+    currentSong.play();
 };
 
-export const decrementScore = (index) => {
-	let date = new Date();
-	let day = date.getDate();
-	let month = date.getMonth()+1;
-	let year = date.getFullYear();
-	const cloneList = [...store.getState().players];
-	cloneList[index].score--;
-	cloneList[index].updated = `${month}/${day}/${year}`;
-
-	store.setState({
-		players: cloneList
-	})
-};
-
-export const addPlayer = (name) => {
-
-	let date = new Date();
-	let day = date.getDate();
-	let month = date.getMonth()+1;
-	let year = date.getFullYear();
-
-	const addPlayerList = [...store.getState().players,   {
-		id : store.getState().players.length + 1,
-		name: name,
-		score: 0,
-		created: `${month}/${day}/${year}`
-	}];
-
-	store.setState({
-		players: addPlayerList
-	})
+export const stop = () => {
+	let currentSong = this.songs[this.nowPlayingIndex];
+    currentSong.stop();
 }
 
 
-export const removePlayer = (index) => {
-	const addPlayerList =  store.getState().players.filter( (item, idx) => idx != index );
+export const next = (index) => {
+	this.stop();
+	this.nowPlayingIndex++;
+	if(this.nowPlayingIndex === this.songs.length) {
+		this.nowPlayingIndex = 0;
+	}
+	this.play();
 
-	store.setState({
-		players: addPlayerList
-	})
 }
 
 
-export const selectPlayer = (index) => {
+export const selectSong = (index) => {
 
 
 	store.setState({
-		selectedPlayerIndex : index
+		selectedSongIndex : index
 	})
 }
